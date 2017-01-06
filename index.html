@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" style="height:100%;">
+    <head>
+        <title>聊天室</title>
+        <meta charset="utf-8" />
+        <meta http-equiv="pragma" content="no-cache" />  
+        <meta http-equiv="cache-control" content="no-cache" />  
+        <meta http-equiv="expires" content="0" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densitydpi=device-dpi" />
+        <script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    </head>
+    <body style="width:100%;text-align:center;height100%;font-size:1rem;">
+    	<div id="msgs" style="width:95%;min-height:200px;height:70%;margin:5%;text-align:left;padding:0;"></div>
+
+    	<div style="width:90%;margin:20px auto;padding:0 5%;height:20%">
+            <textarea rows="3" id="my_msg" name="msg" style="width:100%;border:1px black solid;mini-height:100px;height:80%;font-size:1rem;"></textarea>
+            <br />
+            <button id="send_msg" style="font-size:1.5rem;margin:20px;float:right">发送</button>
+        </div>
+    </body>
+</html>
+
+<script>
+var wsServer = 'ws://119.29.192.119:9443';
+var websocket = new WebSocket(wsServer); 
+websocket.onopen = function (evt) { 
+	$("#msgs").append("<p>Connected to WebSocket server</p>");
+	console.log("Connected to WebSocket server.");
+}; 
+
+websocket.onclose = function (evt) { 
+	$("#msgs").append("<p>Disconnected</p>");
+	console.log("Disconnected"); 
+}; 
+
+websocket.onmessage = function (evt) { 
+	$("#msgs").append("<p>"+evt.data+"</p>");
+	console.log('Retrieved data from server: ' + evt.data); 
+}; 
+
+websocket.onerror = function (evt, e) {
+	$("#msgs").append("<p>"+'Error occured: ' + evt.data+"</p>");
+	console.log('Error occured: ' + evt.data);
+};
+
+$("#send_msg").click(function(){
+	websocket.send($("#my_msg").val()); 
+	$("#my_msg").val("");
+})
+</script>
