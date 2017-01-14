@@ -25,26 +25,36 @@ var wsServer = 'ws://119.29.192.119:9443';
 var websocket = new WebSocket(wsServer); 
 websocket.onopen = function (evt) { 
 	$("#msgs").append("<p>Connected to WebSocket server</p>");
-	console.log("Connected to WebSocket server.");
+	// console.log("Connected to WebSocket server.");
 }; 
 
 websocket.onclose = function (evt) { 
 	$("#msgs").append("<p>Disconnected</p>");
-	console.log("Disconnected"); 
+	// console.log("Disconnected"); 
 }; 
 
 websocket.onmessage = function (evt) { 
 	$("#msgs").append("<p>"+evt.data+"</p>");
-	console.log('Retrieved data from server: ' + evt.data); 
+	// console.log('Retrieved data from server: ' + evt.data); 
 }; 
 
 websocket.onerror = function (evt, e) {
 	$("#msgs").append("<p>"+'Error occured: ' + evt.data+"</p>");
-	console.log('Error occured: ' + evt.data);
+	// console.log('Error occured: ' + evt.data);
 };
 
 $("#send_msg").click(function(){
 	websocket.send($("#my_msg").val()); 
 	$("#my_msg").val("");
 })
+</script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-69141060-13', 'auto');
+  ga('send', 'pageview');
+
 </script>
